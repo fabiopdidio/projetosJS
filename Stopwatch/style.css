@@ -1,20 +1,22 @@
 body {
   background-color: whitesmoke;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* This will make the body fill the whole viewport height */
+  margin: 0;
 }
 
 .stopwatch {
   width: 90%;
   max-width: 600px;
-  background-image: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)),
-    url(images/background.png);
+  background: linear-gradient(135deg, orange, purple, blue, white);
   background-size: cover;
   background-position: center;
   text-align: center;
-  justify-content: center;
   padding: 40px 0;
   color: white;
-  margin: 0 auto;
   box-shadow: 0 10px 10px grey;
   border-radius: 5px;
 }
