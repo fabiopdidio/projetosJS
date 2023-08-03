@@ -1,0 +1,1 @@
+const playBoard = document.querySelector(".play-board")
