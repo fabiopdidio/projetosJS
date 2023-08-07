@@ -13,25 +13,22 @@ let snakeBody = [];
 let setIntervalId;
 let score = 0;
 
-// Get high score from local storage
-
+// Salva maior pontuação
 let highScore = localStorage.getItem("high-score") || 0;
 highScoreElement.innerText = `High Score: ${highScore}`;
 
-// Pass a random between 1 and 30 as food position
-
+/* Faz a comida aparecer em posição aleatória */
 const updateFoodPosition = () => {
-  foodX = Math.floor(Math.random() * 30) + 1;
+  foodX = Math.floor(Math.random() * 30) + 1; // Define 30 posições
   foodY = Math.floor(Math.random() * 30) + 1;
 };
 
+/* Em caso de derrota exibe um alert */
 const handleGameOver = () => {
   clearInterval(setIntervalId);
   alert("Game Over! Press OK to replay...");
   location.reload();
 };
-
-// Change velocity value based on key press
 
 const changeDirection = (e) => {
   if (e.key === "ArrowUp" && velocityY != 1) {
@@ -49,8 +46,7 @@ const changeDirection = (e) => {
   }
 };
 
-// Change Direction on each key click
-
+/* Mudar direção */
 controls.forEach((button) =>
   button.addEventListener("click", () =>
     changeDirection({ key: button.dataset.key })
@@ -61,23 +57,20 @@ const initGame = () => {
   if (gameOver) return handleGameOver();
   let html = `<div class="food" style="grid-area: ${foodY} / ${foodX}"></div>`;
 
-  // When snake eat food
+  /* Aumenta pontuação ao comer */
   if (snakeX === foodX && snakeY === foodY) {
     updateFoodPosition();
-    snakeBody.push([foodY, foodX]); //Add food to snake body array
+    snakeBody.push([foodY, foodX]); //A comida vira tamanho da cobra
     score++;
-    highScore = score >= highScore ? score : highScore; // if score > high score => high score = score
+    highScore = score >= highScore ? score : highScore; // Se a pontuação é maior que a maior atual ela passa a ser a maior
 
     localStorage.setItem("high-score", highScore);
     scoreElement.innerText = `Score: ${score}`;
     highScoreElement.innerText = `High Score: ${highScore}`;
   }
 
-  // Update Snake Head
   snakeX += velocityX;
   snakeY += velocityY;
-
-  // Shifthing forward values of elements in snake body by one
 
   for (let i = snakeBody.length - 1; i > 0; i--) {
     snakeBody[i] = snakeBody[i - 1];
@@ -85,14 +78,12 @@ const initGame = () => {
 
   snakeBody[0] = [snakeX, snakeY];
 
-  // Check snake body is out of wall or no
-
+/* Sensor de colisão com parede */
   if (snakeX <= 0 || snakeX > 30 || snakeY <= 0 || snakeY > 30) {
     return (gameOver = true);
   }
 
-  // Add div for each part of snake body
-
+  /* Faz a cobra crescer */
   for (let i = 0; i < snakeBody.length; i++) {
     html += `<div class="head" style="grid-area: ${snakeBody[i][1]} / ${snakeBody[i][0]}"></div>`;
     // Check snake head hit body or no
